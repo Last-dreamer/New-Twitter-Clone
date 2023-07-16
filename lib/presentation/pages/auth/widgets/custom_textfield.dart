@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,7 +5,7 @@ import 'package:twitter_clone/presentation/pages/auth/widgets/cubit/show_passwor
 
 
 class CustomTextField extends StatefulWidget {
-    CustomTextField({
+    const CustomTextField({
     super.key,
     required this.width,
     required this.theme,
@@ -53,11 +52,9 @@ class _CustomTextFieldState extends State<CustomTextField> with SingleTickerProv
   @override
   void didUpdateWidget(covariant CustomTextField oldWidget) {
     super.didUpdateWidget(oldWidget);
-
     if (widget.showBackgroundColor) {
       _animationController.reset();
       _animationController.forward();
-
     }
   }
 
@@ -68,7 +65,7 @@ class _CustomTextFieldState extends State<CustomTextField> with SingleTickerProv
       child: Hero(
         tag: "background_color",
         child: Container(
-          // duration: const Duration(milliseconds: 200),
+        
           padding: EdgeInsets.symmetric(vertical: widget.width * .03, horizontal: widget.width * .03),
           decoration: BoxDecoration(
               color: widget.showBackgroundColor ?

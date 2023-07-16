@@ -22,6 +22,7 @@ dependencies:
   graphql_flutter: ^5.1.2
   dartz: ^0.10.1
   equatable: ^2.0.5
+  flutter_svg: ^2.0.7
   
 
 dev_dependencies:

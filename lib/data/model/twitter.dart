@@ -7,7 +7,7 @@ class TweetModel {
   final String userId;
   final User user;
   final String body;
-  final DateTime createdAt;
+  final String createdAt;
   TweetModel({
     required this.id,
     required this.userId,
@@ -15,13 +15,14 @@ class TweetModel {
     required this.body,
     required this.createdAt,
   });
+   
 
   TweetModel copyWith({
     String? id,
     String? userId,
     User? user,
     String? body,
-    DateTime? createdAt,
+    String? createdAt,
   }) {
     return TweetModel(
       id: id ?? this.id,
@@ -38,7 +39,7 @@ class TweetModel {
       'userId': userId,
       'user': user.toMap(),
       'body': body,
-      'createdAt': createdAt.millisecondsSinceEpoch,
+      'createdAt': createdAt,
     };
   }
 
@@ -48,7 +49,7 @@ class TweetModel {
       userId: map['userId'] as String,
       user: User.fromMap(map['user'] as Map<String,dynamic>),
       body: map['body'] as String,
-      createdAt: DateTime.fromMillisecondsSinceEpoch(map['createdAt'] as int),
+      createdAt: map['createdAt'] as String,
     );
   }
 
@@ -58,7 +59,7 @@ class TweetModel {
 
   @override
   String toString() {
-    return 'TwitterModel(id: $id, userId: $userId, user: $user, body: $body, createdAt: $createdAt)';
+    return 'TweetModel(id: $id, userId: $userId, user: $user, body: $body, createdAt: $createdAt)';
   }
 
   @override
@@ -186,7 +187,7 @@ class AuthResponse {
   }
 
   factory AuthResponse.fromMap(Map<String, dynamic> map) {
-    log("testing map ${map}");
+    log("testing map $map");
     log("testing map 2 ${map['user']}");
 
     return AuthResponse(

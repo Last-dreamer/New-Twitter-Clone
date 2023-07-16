@@ -1,7 +1,6 @@
 
 
 
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
@@ -14,9 +13,9 @@ class AppTheme {
 
 
 
-  static final Color _darkPrimaryColor =  const  Color(0xff201a31);
-  static final Color _darkPrimaryVariantColor =   const Color(0xff96939e);
-  static final Color _darkOnPrimaryVariantColor = const Color(0xff38304c);
+  static const Color _darkPrimaryColor =  Color(0xff201a31);
+  static const Color _darkPrimaryVariantColor =   Color(0xff96939e);
+  static const Color _darkOnPrimaryVariantColor = Color(0xff38304c);
   static const Color _darkTextColorPrimary = Colors.white;
   static const Color _darkAppColor  = Color(0xff201a31);
   // #0cf4e2
@@ -62,7 +61,7 @@ static final ThemeData darkTheme = ThemeData(
     color: _darkAppColor,
     iconTheme: IconThemeData(color: _iconColor)
   ),
-  colorScheme: ColorScheme.dark(
+  colorScheme: const ColorScheme.dark(
     primary: _darkPrimaryColor,
     secondary:_accentColor,
     onPrimary: _darkPrimaryVariantColor,

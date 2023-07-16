@@ -9,6 +9,7 @@ import 'grpahql_config.dart';
 abstract class TwitterRemoteDatasources {
   Future<AuthResponse> login({String? email,String? password});
   Future<AuthResponse> register({String? username, String? email,String? password, String? confirmPassword});
+  Future<List<TweetModel>> getTweets();
 
 }
 
@@ -112,47 +113,47 @@ class TwitterRemoteDatasourcesImpl extends TwitterRemoteDatasources {
     throw Exception(e);
   }
   }
-  
-//   Future<List<TweetModel>> getTweets() async {
-//   try {
-//     QueryResult result = await  client.query(
-//       QueryOptions(
-//         fetchPolicy:FetchPolicy.noCache,
-//         document: gql(''' 
-//         query {
-//     tweets {
-//         id,
-//         userId,
-//         user {
-//             id,
-//             email,
-//             username,
-//             createdAt
-//         }
-//         body,
-//         createdAt
-//     } 
-// }
-//     ''')));
-
-
-//     List? res = result.data?["tweets"];
-
-//     if(res == null || res.isEmpty){
-//       return [];
-//     }
-
-
-//     if(result.hasException){
-//       throw Exception(result.exception);
-//     }
-//     List<TweetModel> tweets = res.map((e) => TweetModel.fromMap(e)).toList();
-
  
-//     return tweets;
-//   } catch (e) {
-//     throw Exception(e);
-//   }
-//  }
+ @override 
+  Future<List<TweetModel>> getTweets() async {
+  try {
+    QueryResult result = await  client.query(
+      QueryOptions(
+        fetchPolicy:FetchPolicy.noCache,
+        document: gql(''' 
+        query {
+    tweets {
+        id,
+        userId,
+        user {
+            id,
+            email,
+            username,
+            createdAt
+        }
+        body,
+        createdAt
+    } 
+}
+    ''')));
+
+
+    List? res = result.data?["tweets"];
+
+    log("testin res $res");
+
+    if(res == null || res.isEmpty){
+      return [];
+    }
+
+    if(result.hasException){
+      throw Exception(result.exception);
+    }
+    List<TweetModel> tweets =  res.map((e) => TweetModel.fromMap(e)).toList();
+    return tweets;
+  } catch (e) {
+    throw Exception(e);
+  }
+ }
 
 }

@@ -19,5 +19,9 @@ class TwitterUseCase {
   Future<Either<Failure, AuthResponse>> register({String? username, String? email, String? password, String? confirmPassword})async{
     return twitterRepo.register(username: username, email: email, password: password, confirmPassword: confirmPassword);
   }
+
+  Future<Either<Failure, List<TweetModel>>> getTweets()async{
+    return twitterRepo.getTweets();
+  }
   
 }
