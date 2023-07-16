@@ -5,13 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:twitter_clone/presentation/core/routes/router.gr.dart';
-import 'package:twitter_clone/presentation/pages/auth/widgets/cubit/login_cubit_cubit.dart';
-import 'package:twitter_clone/presentation/pages/auth/widgets/cubit/login_cubit_state.dart';
 import 'package:twitter_clone/presentation/pages/auth/widgets/cubit/should_show_bg_color.dart';
-
-import 'package:twitter_clone/presentation/pages/auth/widgets/custom_button.dart';
 import 'package:twitter_clone/presentation/pages/auth/widgets/custom_textfield.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:twitter_clone/presentation/pages/auth/widgets/login_button.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({Key? key}) : super(key: key);
@@ -95,37 +92,7 @@ class LoginPage extends StatelessWidget {
                 SizedBox(
                   height: width * .05,
                 ),
-                BlocBuilder<LoginCubit, LoginCubitState>(
-                  builder: (context, state) {
-
-                    if(state is LoginCubitLoadingState){
-                      return const CircularProgressIndicator();
-                    }
-
-                    if(state is LoginCubitErrorState) {
-                      return CustomButton(
-                        onTap: () => context
-                            .read<LoginCubit>()
-                            .login(email: email.text, password: password.text),
-                        text: state.error,
-                        width: width,
-                        mainHorizontalPadding: mainHorizontalPadding,
-                        theme: theme);
-                    }
-
-                    if(state is LoginCubitSuccessState){
-                      return CustomButton(
-                        onTap: () => context
-                            .read<LoginCubit>()
-                            .login(email: email.text, password: password.text),
-                        text: "LOGIN",
-                        width: width,
-                        mainHorizontalPadding: mainHorizontalPadding,
-                        theme: theme);
-                    }
-                    return const Text("Somethig Wrong");
-                  },
-                ),
+                LoginButton(theme: theme, email: email, password: password, width: width, height: height, mainHorizontalPadding: mainHorizontalPadding),
                 SizedBox(
                   height: width * .02,
                 ),
@@ -163,7 +130,6 @@ class LoginPage extends StatelessWidget {
             text: "Sign up",
             recognizer: TapGestureRecognizer()
               ..onTap = () {
-                log("working");
                 context.router.push(RegisterRoute());
               },
             style: theme.textTheme.bodyMedium?.copyWith(
@@ -173,3 +139,4 @@ class LoginPage extends StatelessWidget {
     );
   }
 }
+

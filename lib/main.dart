@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:twitter_clone/domain/use_cases/twitter_usecase.dart';
 import 'package:twitter_clone/presentation/core/routes/router.gr.dart';
 import 'package:twitter_clone/presentation/pages/auth/widgets/cubit/login_cubit_cubit.dart';
+import 'package:twitter_clone/presentation/pages/auth/widgets/cubit/register_cubit_cubit.dart'; 
 import 'package:twitter_clone/presentation/pages/auth/widgets/cubit/should_show_bg_color.dart';
 import 'package:twitter_clone/presentation/pages/auth/widgets/cubit/show_password.dart';
 import 'package:twitter_clone/theme.dart';
@@ -31,7 +33,9 @@ class MyApp extends StatelessWidget {
           providers: [
             BlocProvider(create: (_)=> ShowPasswordCubit()),
             BlocProvider(create: (_)=> ShouldShowBdColor()),
-            BlocProvider(create: (_)=> LoginCubit())
+            BlocProvider<LoginCubit>(create: (context) => LoginCubit(useCase: di.di<TwitterUseCase>())),
+            BlocProvider<RegisterCubit>(create: (context) => RegisterCubit(useCase: di.di<TwitterUseCase>()))
+
           ],
           child:  child!
         );

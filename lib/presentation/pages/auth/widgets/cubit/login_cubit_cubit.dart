@@ -1,28 +1,23 @@
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:twitter_clone/domain/use_cases/twitter_usecase.dart';
 
-import '../../../../../data/graph/graphql_service.dart';
-import '../../../../../di.dart';
 import 'login_cubit_state.dart';
 
 
 
 class LoginCubit extends Cubit<LoginCubitState> {
-  LoginCubit() : super(LoginCubitInitial());
+  final TwitterUseCase useCase; 
+  LoginCubit({required this.useCase}) : super(LoginCubitInitial());
 
   login({String? email, String? password})async{
     emit(LoginCubitLoadingState());
     try{
-
-        var service = di<GraphqlService>();
-        var res = await  service.login(email: email, password: password);
-        if(res){
-          emit(LoginCubitSuccessState());
-        }else{
-          emit(LoginCubitErrorState(error: "Something wrong with calling the api from graph server"));
-        }
+        final res = await useCase.login(email: email, password: password);
+         res.fold((l) => emit(LoginCubitErrorState(error: l)),
+          (r) => emit(LoginCubitSuccessState(response: r)));
     }catch (e){
-      emit(LoginCubitErrorState(error: e.toString()));
+      emit(LoginCubitErrorState(error: e));
     }
 
   }

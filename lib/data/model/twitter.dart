@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
+import 'dart:developer';
 
 class TweetModel {
   final String id;
@@ -87,19 +88,20 @@ class User {
   final String id;
   final String email;
   final String username;
-  final DateTime createdAt;
+  final String createdAt;
   User({
     required this.id,
     required this.email,
     required this.username,
     required this.createdAt,
   });
+  
 
   User copyWith({
     String? id,
     String? email,
     String? username,
-    DateTime? createdAt,
+    String? createdAt,
   }) {
     return User(
       id: id ?? this.id,
@@ -114,7 +116,7 @@ class User {
       'id': id,
       'email': email,
       'username': username,
-      'createdAt': createdAt.millisecondsSinceEpoch,
+      'createdAt': createdAt,
     };
   }
 
@@ -123,7 +125,7 @@ class User {
       id: map['id'] as String,
       email: map['email'] as String,
       username: map['username'] as String,
-      createdAt: DateTime.fromMillisecondsSinceEpoch(map['createdAt'] as int),
+      createdAt: map['createdAt'] as String,
     );
   }
 
@@ -154,4 +156,61 @@ class User {
       username.hashCode ^
       createdAt.hashCode;
   }
+}
+
+
+
+class AuthResponse {
+  final String accessToken;
+  final User user;
+  AuthResponse({
+    required this.accessToken,
+    required this.user,
+  });
+
+  AuthResponse copyWith({
+    String? accessToken,
+    User? user,
+  }) {
+    return AuthResponse(
+      accessToken: accessToken ?? this.accessToken,
+      user: user ?? this.user,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'accessToken': accessToken,
+      'user': user.toMap(),
+    };
+  }
+
+  factory AuthResponse.fromMap(Map<String, dynamic> map) {
+    log("testing map ${map}");
+    log("testing map 2 ${map['user']}");
+
+    return AuthResponse(
+      accessToken: map['accessToken'] ?? "",
+      user: User.fromMap(map['user'] ?? {}),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory AuthResponse.fromJson(String source) => AuthResponse.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() => 'AuthResponse(accessToken: $accessToken, user: $user)';
+
+  @override
+  bool operator ==(covariant AuthResponse other) {
+    if (identical(this, other)) return true;
+  
+    return 
+      other.accessToken == accessToken &&
+      other.user == user;
+  }
+
+  @override
+  int get hashCode => accessToken.hashCode ^ user.hashCode;
 }
