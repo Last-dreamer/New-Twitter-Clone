@@ -1,15 +1,17 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:timeago/timeago.dart' as timeago;
+import 'package:twitter_clone/data/model/twitter.dart';
 
 
 class TweetContainer extends StatelessWidget {
   const TweetContainer({
     super.key,
-    required this.text
+    required this.tweet
   });
 
-  final String text;
+  final TweetModel tweet;
 
   @override
   Widget build(BuildContext context) {
@@ -47,11 +49,11 @@ class TweetContainer extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
             children: [
 
-          firstSection(theme),
+          firstSection(theme, tweet.user.username, tweet.createdAt),
           
           const SizedBox(height: 5,),
             
-           RichText(text: TextSpan(text: text,
+           RichText(text: TextSpan(text: tweet.body,
             style: theme.textTheme.bodyLarge),),
             Container(height: 20,),
             lastSection(width, theme),    
@@ -107,16 +109,16 @@ class TweetContainer extends StatelessWidget {
             );
   }
 
-  Row firstSection(ThemeData theme) {
+  Row firstSection(ThemeData theme, String name, String date) {
     return Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-                Text("Person's Name", style: theme.textTheme.bodyMedium,),
-              const  Row(
+                Text(name, style: theme.textTheme.bodyMedium,),
+                 Row(
                   children: [
-                    Icon(Icons.timer_outlined, size: 15,),
-                    SizedBox(width: 5,),
-                    Text("3 min")
+                    const Icon(Icons.timer_outlined, size: 15,),
+                    const SizedBox(width: 5,),
+                    Text(timeago.format(DateTime.parse(date)))
                   ],
                 )
               ],
