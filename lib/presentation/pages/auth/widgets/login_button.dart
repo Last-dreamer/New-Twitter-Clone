@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:twitter_clone/presentation/pages/auth/widgets/custom_button.dart';
 
 import '../../../core/routes/router.gr.dart';
+import '../../common/widgets/snack_bar.dart';
 import 'cubit/login_cubit_cubit.dart';
 import 'cubit/login_cubit_state.dart';
 
@@ -31,21 +32,18 @@ class LoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<LoginCubit, LoginCubitState>(
-      listener: (context, state) {
+      listener: (context, state)  {
         if(state is LoginCubitErrorState){
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error: ${state.error}"), backgroundColor: Colors.red, behavior: SnackBarBehavior.floating,));
+          CustomSnackBar(error: true, text: "Error: ${state.error}",context: context).showSnackbar();
         }
         if(state is LoginCubitSuccessState){
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: const Text("Successfully login"), backgroundColor: theme.colorScheme.secondary, behavior: SnackBarBehavior.floating));
-          context.router.push(const TweetRoute());
+          CustomSnackBar(error: false, text: "Successfully login",context: context).showSnackbar();
+          context.router.push(const MainRoute());
         }
       },
       builder: (context, state) {
         return BlocBuilder<LoginCubit, LoginCubitState>(
-          builder: (context, state) {
-
-            log("testing state $state");
-            
+          builder: (context, state) {            
             return  CustomButton(
                    onTap: () => context.read<LoginCubit>().login(
                       email: email.text, password: password.text),

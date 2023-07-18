@@ -60,7 +60,6 @@ class TweetContainer extends StatelessWidget {
             ],
           ),
         )),
-            
         ],
       ),
     );
