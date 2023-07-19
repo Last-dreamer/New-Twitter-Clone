@@ -25,6 +25,7 @@ dependencies:
   flutter_svg: ^2.0.7
   timeago: ^3.5.0 
   custom_refresh_indicator: ^2.2.1
+  intl: ^0.18.1
 
 dev_dependencies:
   auto_route_generator:

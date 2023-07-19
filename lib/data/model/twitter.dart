@@ -15,7 +15,6 @@ class TweetModel {
     required this.body,
     required this.createdAt,
   });
-   
 
   TweetModel copyWith({
     String? id,
@@ -44,18 +43,20 @@ class TweetModel {
   }
 
   factory TweetModel.fromMap(Map<String, dynamic> map) {
-    return TweetModel(
+    var test = TweetModel(
       id: map['id'] as String,
       userId: map['userId'] as String,
-      user: User.fromMap(map['user'] as Map<String,dynamic>),
+      user: User.fromMap(map['user'] as Map<String, dynamic>),
       body: map['body'] as String,
       createdAt: map['createdAt'] as String,
     );
+    return test;
   }
 
   String toJson() => json.encode(toMap());
 
-  factory TweetModel.fromJson(String source) => TweetModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory TweetModel.fromJson(String source) =>
+      TweetModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
@@ -65,25 +66,23 @@ class TweetModel {
   @override
   bool operator ==(covariant TweetModel other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.id == id &&
-      other.userId == userId &&
-      other.user == user &&
-      other.body == body &&
-      other.createdAt == createdAt;
+
+    return other.id == id &&
+        other.userId == userId &&
+        other.user == user &&
+        other.body == body &&
+        other.createdAt == createdAt;
   }
 
   @override
   int get hashCode {
     return id.hashCode ^
-      userId.hashCode ^
-      user.hashCode ^
-      body.hashCode ^
-      createdAt.hashCode;
+        userId.hashCode ^
+        user.hashCode ^
+        body.hashCode ^
+        createdAt.hashCode;
   }
 }
-
 
 class User {
   final String id;
@@ -96,7 +95,6 @@ class User {
     required this.username,
     required this.createdAt,
   });
-  
 
   User copyWith({
     String? id,
@@ -132,7 +130,8 @@ class User {
 
   String toJson() => json.encode(toMap());
 
-  factory User.fromJson(String source) => User.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory User.fromJson(String source) =>
+      User.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
@@ -142,24 +141,21 @@ class User {
   @override
   bool operator ==(covariant User other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.id == id &&
-      other.email == email &&
-      other.username == username &&
-      other.createdAt == createdAt;
+
+    return other.id == id &&
+        other.email == email &&
+        other.username == username &&
+        other.createdAt == createdAt;
   }
 
   @override
   int get hashCode {
     return id.hashCode ^
-      email.hashCode ^
-      username.hashCode ^
-      createdAt.hashCode;
+        email.hashCode ^
+        username.hashCode ^
+        createdAt.hashCode;
   }
 }
-
-
 
 class AuthResponse {
   final String accessToken;
@@ -198,7 +194,8 @@ class AuthResponse {
 
   String toJson() => json.encode(toMap());
 
-  factory AuthResponse.fromJson(String source) => AuthResponse.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory AuthResponse.fromJson(String source) =>
+      AuthResponse.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() => 'AuthResponse(accessToken: $accessToken, user: $user)';
@@ -206,10 +203,8 @@ class AuthResponse {
   @override
   bool operator ==(covariant AuthResponse other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.accessToken == accessToken &&
-      other.user == user;
+
+    return other.accessToken == accessToken && other.user == user;
   }
 
   @override

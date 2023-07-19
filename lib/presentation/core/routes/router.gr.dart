@@ -14,6 +14,7 @@
 import 'package:auto_route/auto_route.dart' as _i7;
 import 'package:flutter/material.dart' as _i8;
 
+import '../../../data/model/twitter.dart' as _i9;
 import '../../pages/auth/login.dart' as _i2;
 import '../../pages/auth/register.dart' as _i3;
 import '../../pages/main_page/main_page.dart' as _i1;
@@ -88,9 +89,13 @@ class AppRouter extends _i7.RootStackRouter {
       );
     },
     ReplyTweetRoute.name: (routeData) {
+      final args = routeData.argsAs<ReplyTweetRouteArgs>();
       return _i7.CustomPage<dynamic>(
         routeData: routeData,
-        child: const _i6.ReplyTweetPage(),
+        child: _i6.ReplyTweetPage(
+          key: args.key,
+          tweet: args.tweet,
+        ),
         transitionsBuilder: _i7.TransitionsBuilders.zoomIn,
         durationInMilliseconds: 300,
         opaque: true,
@@ -252,12 +257,34 @@ class TweetsRouteArgs {
 
 /// generated route for
 /// [_i6.ReplyTweetPage]
-class ReplyTweetRoute extends _i7.PageRouteInfo<void> {
-  const ReplyTweetRoute()
-      : super(
+class ReplyTweetRoute extends _i7.PageRouteInfo<ReplyTweetRouteArgs> {
+  ReplyTweetRoute({
+    _i8.Key? key,
+    required _i9.TweetModel tweet,
+  }) : super(
           ReplyTweetRoute.name,
           path: 'reply-tweet-page',
+          args: ReplyTweetRouteArgs(
+            key: key,
+            tweet: tweet,
+          ),
         );
 
   static const String name = 'ReplyTweetRoute';
+}
+
+class ReplyTweetRouteArgs {
+  const ReplyTweetRouteArgs({
+    this.key,
+    required this.tweet,
+  });
+
+  final _i8.Key? key;
+
+  final _i9.TweetModel tweet;
+
+  @override
+  String toString() {
+    return 'ReplyTweetRouteArgs{key: $key, tweet: $tweet}';
+  }
 }

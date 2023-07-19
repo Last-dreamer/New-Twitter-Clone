@@ -1,10 +1,14 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget  {
   const CustomAppBar({
     super.key,
+    this.back = false
   });
+
+  final bool back;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +24,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget  {
          decoration:const BoxDecoration(
           shape: BoxShape.circle
          ),
-        child: SvgPicture.asset("assets/round-flutter-dash.svg",
+        child: back ? GestureDetector(
+          onTap: (){
+            context.router.pop();
+          },
+          child: const  Icon(Icons.arrow_back),
+        )  :  SvgPicture.asset("assets/round-flutter-dash.svg",
          color: theme.colorScheme.secondary,
          )),
       actions:   [

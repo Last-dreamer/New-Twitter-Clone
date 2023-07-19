@@ -16,13 +16,7 @@ import '../common/widgets/snack_bar.dart';
 class TweetsPage extends StatelessWidget {
     TweetsPage({super.key});
 
-
-    // @override
-    // void initState() {
-    //   super.initState();
-      
-    // }
-
+    
 
  var armOffset = 80.0;
   @override
@@ -80,7 +74,7 @@ class TweetsPage extends StatelessWidget {
                         itemBuilder: (context, index) {
                           return GestureDetector(
                             onTap: (){
-                              context.router.push(const ReplyTweetRoute());
+                              context.router.push(ReplyTweetRoute(tweet: state.tweets[index]));
                             },
                             child: TweetContainer(tweet: state.tweets[index]));
                         },

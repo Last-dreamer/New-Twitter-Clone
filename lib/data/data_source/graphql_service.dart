@@ -1,33 +1,34 @@
 import 'dart:developer';
 
+import 'package:dartz/dartz.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:twitter_clone/data/exception/exception.dart'; 
+import 'package:twitter_clone/data/exception/exception.dart';
 import '../model/twitter.dart';
 import 'grpahql_config.dart';
 
-
 abstract class TwitterRemoteDatasources {
-  Future<AuthResponse> login({String? email,String? password});
-  Future<AuthResponse> register({String? username, String? email,String? password, String? confirmPassword});
+  Future<AuthResponse> login({String? email, String? password});
+  Future<AuthResponse> register(
+      {String? username,
+      String? email,
+      String? password,
+      String? confirmPassword});
   Future<List<TweetModel>> getTweets();
-
+  Future<List<TweetModel>> getReplyTweets({String? parentId});
 }
 
 class TwitterRemoteDatasourcesImpl extends TwitterRemoteDatasources {
   static GraphQlConfig config = GraphQlConfig();
-  GraphQLClient client  = config.clientToQuery();
+  GraphQLClient client = config.clientToQuery();
 
   @override
   Future<AuthResponse> login({String? email, String? password}) async {
-  try {
-    QueryResult result = await client.mutate(
-      MutationOptions(
-        fetchPolicy:FetchPolicy.noCache,
-        variables: {
-            "email": "$email",
-            "password": "$password"
-        },
-        document: gql('''  
+    try {
+      QueryResult result = await client.mutate(MutationOptions(
+          fetchPolicy: FetchPolicy.noCache,
+          variables: {"email": "$email", "password": "$password"},
+          document: gql(
+            '''  
          mutation Mutation(\$email: String!, \$password: String!){
            login(input:  {
               email: \$email,
@@ -43,39 +44,43 @@ class TwitterRemoteDatasourcesImpl extends TwitterRemoteDatasources {
            }
          }
     ''',
-    )));
+          )));
 
-    if(result.hasException){
-      log("testing rr ${result.exception} :: ${result.exception?.graphqlErrors.first.message}");
-      throw Exception(result.exception?.graphqlErrors.first.message);
-    }else{
-      log("testingee2 e${result.data}");
-      var res =  result.data?["login"];
+      if (result.hasException) {
+        log("testing rr ${result.exception} :: ${result.exception?.graphqlErrors.first.message}");
+        throw Exception(result.exception?.graphqlErrors.first.message);
+      } else {
+        log("testingee2 e${result.data}");
+        var res = result.data?["login"];
 
-      if(res == null  && res.isEmpty){
-        throw MissingFieldsException();
+        if (res == null && res.isEmpty) {
+          throw MissingFieldsException();
+        }
+        AuthResponse map = AuthResponse.fromMap(res);
+        return map;
       }
-      AuthResponse map = AuthResponse.fromMap(res);
-      return map;
+    } catch (e) {
+      throw Exception(e);
     }
-  } catch (e) {
-    throw Exception(e);
   }
- }
- 
+
   @override
-  Future<AuthResponse> register({String? username, String? email, String? password, String? confirmPassword})async {
-     try {
-    QueryResult result = await client.mutate(
-      MutationOptions(
-        fetchPolicy:FetchPolicy.noCache,
-        variables: {
+  Future<AuthResponse> register(
+      {String? username,
+      String? email,
+      String? password,
+      String? confirmPassword}) async {
+    try {
+      QueryResult result = await client.mutate(MutationOptions(
+          fetchPolicy: FetchPolicy.noCache,
+          variables: {
             "username": "$username",
             "email": "$email",
             "password": "$password",
             "confirmPassword": "$confirmPassword"
-        },
-        document: gql('''  
+          },
+          document: gql(
+            '''  
           mutation Mutation(\$username: String!, \$email: String!, \$password: String!, \$confirmPassword: String!){
     register (
         input: {
@@ -95,32 +100,29 @@ class TwitterRemoteDatasourcesImpl extends TwitterRemoteDatasources {
     }
 }
     ''',
-    )));
+          )));
 
-    if(result.hasException){      
-      throw Exception(result.exception?.graphqlErrors.first.message);
-    }else{
-      log("testingee2 e${result.data}");
-      var res =  result.data?["register"];
+      if (result.hasException) {
+        throw Exception(result.exception?.graphqlErrors.first.message);
+      } else {
+        var res = result.data?["register"];
 
-      if(res == null  && res.isEmpty){
-        throw MissingFieldsException();
+        if (res == null && res.isEmpty) {
+          throw MissingFieldsException();
+        }
+        AuthResponse map = AuthResponse.fromMap(res);
+        return map;
       }
-      AuthResponse map = AuthResponse.fromMap(res);
-      return map;
+    } catch (e) {
+      throw Exception(e);
     }
-  } catch (e) {
-    throw Exception(e);
   }
-  }
- 
- @override 
+
+  @override
   Future<List<TweetModel>> getTweets() async {
-  try {
-    QueryResult result = await  client.query(
-      QueryOptions(
-        fetchPolicy:FetchPolicy.noCache,
-        document: gql(''' 
+    try {
+      QueryResult result = await client.query(
+          QueryOptions(fetchPolicy: FetchPolicy.noCache, document: gql(''' 
         query {
     tweets {
         id,
@@ -137,23 +139,57 @@ class TwitterRemoteDatasourcesImpl extends TwitterRemoteDatasources {
 }
     ''')));
 
+      List? res = result.data?["tweets"];
 
-    List? res = result.data?["tweets"];
+      if (res == null || res.isEmpty) {
+        return [];
+      }
 
-    log("testin res $res");
-
-    if(res == null || res.isEmpty){
-      return [];
+      if (result.hasException) {
+        throw Exception(result.exception);
+      }
+      List<TweetModel> tweets = res.map((e) => TweetModel.fromMap(e)).toList();
+      return tweets;
+    } catch (e) {
+      throw Exception(e);
     }
-
-    if(result.hasException){
-      throw Exception(result.exception);
-    }
-    List<TweetModel> tweets =  res.map((e) => TweetModel.fromMap(e)).toList();
-    return tweets;
-  } catch (e) {
-    throw Exception(e);
   }
- }
 
+  @override
+  Future<List<TweetModel>> getReplyTweets({String? parentId}) async {
+    try {
+      QueryResult result = await client.query(QueryOptions(
+          fetchPolicy: FetchPolicy.noCache,
+          variables: {"parentId": "$parentId"},
+          document: gql(''' 
+     mutation Mutation(\$parentId: ID!){
+    getAllTweetReply(
+        parentId: \$parentId){
+           id,
+           user {
+               id
+               username
+               email
+               createdAt       
+           },
+        userId,
+    		body,
+    		createdAt
+    }
+}
+      ''')));
+
+      List? res = result.data?['getAllTweetReply'];
+
+      if (res == null && res!.isEmpty) {
+        throw MissingFieldsException();
+      }
+
+      List<TweetModel> list = res.map((e) => TweetModel.fromMap(e)).toList();
+
+      return list;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 }

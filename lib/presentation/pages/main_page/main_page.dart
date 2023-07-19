@@ -51,7 +51,6 @@ class _MainPageState extends State<MainPage> {
       routes: const [
        GuestMainRoute(),
        SearchRoute()
-
       ],
       builder: (context, child, anim) {
           tabsRouter = AutoTabsRouter.of(context);
