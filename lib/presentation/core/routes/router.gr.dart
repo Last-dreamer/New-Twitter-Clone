@@ -37,11 +37,9 @@ class AppRouter extends _i7.RootStackRouter {
       );
     },
     LoginRoute.name: (routeData) {
-      final args = routeData.argsAs<LoginRouteArgs>(
-          orElse: () => const LoginRouteArgs());
       return _i7.CustomPage<dynamic>(
         routeData: routeData,
-        child: _i2.LoginPage(key: args.key),
+        child: const _i2.LoginPage(),
         transitionsBuilder: _i7.TransitionsBuilders.slideRight,
         durationInMilliseconds: 400,
         opaque: true,
@@ -160,26 +158,14 @@ class MainRoute extends _i7.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i2.LoginPage]
-class LoginRoute extends _i7.PageRouteInfo<LoginRouteArgs> {
-  LoginRoute({_i8.Key? key})
+class LoginRoute extends _i7.PageRouteInfo<void> {
+  const LoginRoute()
       : super(
           LoginRoute.name,
           path: '/',
-          args: LoginRouteArgs(key: key),
         );
 
   static const String name = 'LoginRoute';
-}
-
-class LoginRouteArgs {
-  const LoginRouteArgs({this.key});
-
-  final _i8.Key? key;
-
-  @override
-  String toString() {
-    return 'LoginRouteArgs{key: $key}';
-  }
 }
 
 /// generated route for

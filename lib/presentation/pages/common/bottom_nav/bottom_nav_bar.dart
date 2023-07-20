@@ -1,3 +1,5 @@
+// ignore_for_file: unused_element
+
 import 'package:flutter/material.dart';
 
 class LampBottomNavigationBar extends StatefulWidget {
@@ -6,7 +8,8 @@ class LampBottomNavigationBar extends StatefulWidget {
   final int currentIndex;
   final ValueChanged<int> onTap;
 
-     const LampBottomNavigationBar({super.key, 
+  const LampBottomNavigationBar({
+    super.key,
     this.iconSize = 24,
     this.items = const <IconData>[],
     required this.width,
@@ -22,7 +25,6 @@ class LampBottomNavigationBar extends StatefulWidget {
 
 class _LampBottomNavigationBarState extends State<LampBottomNavigationBar>
     with SingleTickerProviderStateMixin {
-
   int oldIndex = 0;
   late AnimationController _controller;
   double width = 0.0;
@@ -37,7 +39,7 @@ class _LampBottomNavigationBarState extends State<LampBottomNavigationBar>
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 400),
-      reverseDuration:const  Duration(milliseconds: 400),
+      reverseDuration: const Duration(milliseconds: 400),
     );
     _controller.forward();
     width = widget.width;
@@ -49,14 +51,15 @@ class _LampBottomNavigationBarState extends State<LampBottomNavigationBar>
       tiles.add(
         InkWell(
           onTap: () {
-            if (widget.onTap != null) widget.onTap(i);
+            widget.onTap(i);
           },
           child: LampNavigationBarTile(
             key: UniqueKey(),
             icon: widget.items[i],
             active: i == widget.currentIndex,
             wasActive: i == oldIndex,
-            animation: _controller, onTap: () {  },
+            animation: _controller,
+            onTap: () {},
           ),
         ),
       );
@@ -72,11 +75,10 @@ class _LampBottomNavigationBarState extends State<LampBottomNavigationBar>
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).colorScheme.onPrimary.withAlpha(50),
-            spreadRadius: 5,
-            blurRadius: 5,
-            offset: const Offset(12,5)
-          )
+              color: Theme.of(context).colorScheme.onPrimary.withAlpha(50),
+              spreadRadius: 5,
+              blurRadius: 5,
+              offset: const Offset(12, 5))
         ],
         color: Theme.of(context).colorScheme.primaryContainer,
       ),
@@ -95,8 +97,8 @@ class _LampBottomNavigationBarState extends State<LampBottomNavigationBar>
                       progress: Tween<double>(begin: 0.0, end: 1.0)
                           .animate(CurvedAnimation(
                               parent: _controller,
-                              curve:
-                                 const Interval(0.0, 0.5, curve: Curves.easeInOut)))
+                              curve: const Interval(0.0, 0.5,
+                                  curve: Curves.easeInOut)))
                           .value,
                       count: widget.items.length),
                 ),
@@ -126,7 +128,7 @@ class LampNavigationBarTile extends StatelessWidget {
   final Animation<double> animation;
   final VoidCallback onTap;
 
-  LampNavigationBarTile({
+  const LampNavigationBarTile({
     Key? key,
     required this.icon,
     required this.animation,
@@ -164,8 +166,7 @@ class LampNavigationBarTile extends StatelessWidget {
                         curve: const Interval(0, 0.4, curve: Curves.easeInOut)),
                   )),
             child: CustomPaint(
-              foregroundPainter:
-              _LightLampPainter(active: active || wasActive),
+              foregroundPainter: _LightLampPainter(active: active || wasActive),
             ),
           )
         ],
@@ -176,15 +177,13 @@ class LampNavigationBarTile extends StatelessWidget {
 
 class _SelectedTilePainter extends CustomPainter {
   _SelectedTilePainter({
-   required  this.oldPosition,
-   required this.newPosition,
-   required this.progress,
-   required this.count,
-     this.iconSize = 24,
-     this.color = Colors.white,
-  }) {
-    assert(progress != null);
-  }
+    required this.oldPosition,
+    required this.newPosition,
+    required this.progress,
+    required this.count,
+    this.iconSize = 24,
+    this.color = Colors.white,
+  });
 
   final int oldPosition, newPosition, count;
   final double iconSize;
@@ -247,7 +246,7 @@ class _LightLampPainter extends CustomPainter {
           color.withAlpha(0)
         ], begin: Alignment.topCenter, end: Alignment.bottomCenter)
             .createShader(
-         const Rect.fromLTWH(0, 0, 90, 56),
+          const Rect.fromLTWH(0, 0, 90, 56),
         );
       var oldTrap = Path()..addPolygon(getTrap(size), true);
       canvas.drawPath(oldTrap, p);

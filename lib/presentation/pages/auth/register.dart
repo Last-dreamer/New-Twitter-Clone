@@ -12,6 +12,7 @@ import 'package:twitter_clone/theme.dart';
 
 import '../../core/routes/router.gr.dart';
 
+// ignore: must_be_immutable
 class RegisterPage extends StatelessWidget {
   RegisterPage({Key? key}) : super(key: key);
 
@@ -147,24 +148,29 @@ class RegisterPage extends StatelessWidget {
 
                 BlocConsumer<RegisterCubit, RegisterCubitState>(
                   listener: (context, state) {
-                      if(state is RegisterCubitError){
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error: ${state.err}"), backgroundColor: Colors.red, behavior: SnackBarBehavior.floating));
+                    if (state is RegisterCubitError) {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text("Error: ${state.err}"),
+                          backgroundColor: Colors.red,
+                          behavior: SnackBarBehavior.floating));
                     }
-                    if(state is RegisterCubitSuccess){
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: const Text("Successfully regsitered"), backgroundColor: theme.colorScheme.secondary, behavior: SnackBarBehavior.floating));
+                    if (state is RegisterCubitSuccess) {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: const Text("Successfully regsitered"),
+                          backgroundColor: theme.colorScheme.secondary,
+                          behavior: SnackBarBehavior.floating));
                       context.router.push(LoginRoute());
                     }
                   },
                   builder: (context, state) {
-
-                    
                     return CustomButton(
                       text: "SIGN UPs",
                       width: width,
                       height: height,
                       mainHorizontalPadding: mainHorizontalPadding,
                       theme: theme,
-                       shouldAnimated: (state is RegisterCubitLoading) ? true: false,
+                      shouldAnimated:
+                          (state is RegisterCubitLoading) ? true : false,
                       onTap: () => context.read<RegisterCubit>().register(
                           username: username.text,
                           email: email.text,

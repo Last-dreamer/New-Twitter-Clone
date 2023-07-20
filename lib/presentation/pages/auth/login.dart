@@ -1,4 +1,3 @@
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,14 +8,38 @@ import 'package:twitter_clone/presentation/pages/auth/widgets/custom_textfield.d
 import 'package:auto_route/auto_route.dart';
 import 'package:twitter_clone/presentation/pages/auth/widgets/login_button.dart';
 
-class LoginPage extends StatelessWidget {
-  LoginPage({Key? key}) : super(key: key);
+import '../../../data/model/twitter.dart';
+import '../../../di.dart';
+import '../../core/pref/pref.dart';
+
+// ignore: must_be_immutable
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   var mainHorizontalPadding = .07;
 
   var backgroundColor = false;
-
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
+
+  @override
+  void initState() {
+    _checkIfAlreadyLogin();
+    super.initState();
+  }
+
+  _checkIfAlreadyLogin() async {
+    User? user = await Pref.getUser();
+    if (user != null) {
+      // ignore: use_build_context_synchronously
+      context.router.replace(const MainRoute());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +60,7 @@ class LoginPage extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Hero(
-                  tag: "background_color",
+                  tag: widget.key.toString(),
                   child: Container(
                     height:
                         0.0, // Adjust the size according to your text field size
@@ -91,7 +114,13 @@ class LoginPage extends StatelessWidget {
                 SizedBox(
                   height: width * .05,
                 ),
-                LoginButton(theme: theme, email: email, password: password, width: width, height: height, mainHorizontalPadding: mainHorizontalPadding),
+                LoginButton(
+                    theme: theme,
+                    email: email,
+                    password: password,
+                    width: width,
+                    height: height,
+                    mainHorizontalPadding: mainHorizontalPadding),
                 SizedBox(
                   height: width * .02,
                 ),
@@ -138,4 +167,3 @@ class LoginPage extends StatelessWidget {
     );
   }
 }
-

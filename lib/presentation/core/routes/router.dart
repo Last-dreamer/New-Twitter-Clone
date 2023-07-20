@@ -19,6 +19,10 @@ import '../../pages/search/search.dart';
           page: ReplyTweetPage,
           durationInMilliseconds: 300,
           transitionsBuilder: TransitionsBuilders.zoomIn),
+      // CustomRoute(
+      //     page: NewTweetPage,
+      //     durationInMilliseconds: 300,
+      //     transitionsBuilder: TransitionsBuilders.fadeIn),
     ]),
     CustomRoute(
         page: SearchPage,

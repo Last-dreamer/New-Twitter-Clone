@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -7,6 +8,8 @@ import 'package:timeago/timeago.dart' as timeago;
 import 'package:twitter_clone/data/model/twitter.dart';
 import 'package:twitter_clone/presentation/pages/reply_tweets/widget/cubit/reply_tweets_cubit.dart';
 import 'package:twitter_clone/presentation/pages/tweet/widget/custom_widget.dart';
+
+import '../common/show_modal_bottom_sheet.dart';
 
 class ReplyTweetPage extends StatefulWidget {
   const ReplyTweetPage({
@@ -101,8 +104,10 @@ class _ReplyTweetPageState extends State<ReplyTweetPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Icon(
-            Icons.comment_outlined,
+          GestureDetector(
+            onTap: () => showSheet(
+                context, theme, width.width, width.height, "Tweet Reply"),
+            child: const Icon(Icons.comment),
           ),
           const Icon(Icons.loop_rounded),
           Icon(Icons.favorite, color: theme.colorScheme.secondary),
@@ -148,17 +153,6 @@ class _ReplyTweetPageState extends State<ReplyTweetPage> {
   SizedBox gap() {
     return const SizedBox(
       height: 20,
-    );
-  }
-
-  Container line(double width, ThemeData theme) {
-    return Container(
-      height: .1,
-      width: width,
-      decoration: BoxDecoration(
-          border: Border.all(color: theme.colorScheme.secondary),
-          borderRadius: BorderRadius.circular(10),
-          color: theme.colorScheme.secondary),
     );
   }
 
