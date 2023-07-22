@@ -1,7 +1,7 @@
 import 'dart:developer';
 
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:twitter_clone/data/model/twitter.dart';
 import 'package:twitter_clone/domain/use_cases/twitter_usecase.dart';
 
@@ -17,7 +17,7 @@ class ReplyTweetsCubit extends Cubit<ReplyTweetsState> {
 
       var res = await useCase.getReplyTweets(id: id);
 
-      log("testing cubit ${res}");
+      log("testing cubit $res");
 
       res.fold((l) => emit(ReplyTweetsError(err: l)),
           (r) => emit(ReplyTweetsSuccess(list: r)));

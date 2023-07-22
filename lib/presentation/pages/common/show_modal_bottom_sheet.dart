@@ -10,7 +10,7 @@ showSheet(BuildContext context, theme, width, height, text) async {
       backgroundColor: theme.colorScheme.primaryContainer,
       context: context,
       builder: (context) {
-        return Container(
+        return SizedBox(
           width: width,
           height: height,
           child: Container(
@@ -119,6 +119,18 @@ showSheet(BuildContext context, theme, width, height, text) async {
 SizedBox gap() {
   return const SizedBox(
     height: 20,
+  );
+}
+
+SizedBox lessGap() {
+  return const SizedBox(
+    height: 10,
+  );
+}
+
+SizedBox lessWidthGap() {
+  return const SizedBox(
+    width: 10,
   );
 }
 

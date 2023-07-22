@@ -159,7 +159,7 @@ class RegisterPage extends StatelessWidget {
                           content: const Text("Successfully regsitered"),
                           backgroundColor: theme.colorScheme.secondary,
                           behavior: SnackBarBehavior.floating));
-                      context.router.push(LoginRoute());
+                      context.router.push(const LoginRoute());
                     }
                   },
                   builder: (context, state) {
@@ -210,7 +210,7 @@ class RegisterPage extends StatelessWidget {
             recognizer: TapGestureRecognizer()
               ..onTap = () {
                 log("working");
-                context.router.push(LoginRoute());
+                context.router.push(const LoginRoute());
               },
             style: theme.textTheme.bodyMedium?.copyWith(
                 color: theme.colorScheme.secondary,

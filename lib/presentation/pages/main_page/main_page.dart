@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -38,7 +40,7 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return AutoTabsRouter(
       homeIndex: 0,
-      routes: const [GuestMainRoute(), SearchRoute()],
+      routes: const [GuestMainRoute(), ProfileRoute()],
       builder: (context, child, anim) {
         tabsRouter = AutoTabsRouter.of(context);
         return Scaffold(

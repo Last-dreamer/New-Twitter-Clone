@@ -19,7 +19,7 @@ import '../../pages/auth/login.dart' as _i2;
 import '../../pages/auth/register.dart' as _i3;
 import '../../pages/main_page/main_page.dart' as _i1;
 import '../../pages/reply_tweets/reply_tweet.dart' as _i6;
-import '../../pages/search/search.dart' as _i4;
+import '../../pages/profle/profile.dart' as _i4;
 import '../../pages/tweet/tweet.dart' as _i5;
 
 class AppRouter extends _i7.RootStackRouter {
@@ -64,10 +64,10 @@ class AppRouter extends _i7.RootStackRouter {
         child: const _i1.GuestMainPage(),
       );
     },
-    SearchRoute.name: (routeData) {
+    ProfileRoute.name: (routeData) {
       return _i7.CustomPage<dynamic>(
         routeData: routeData,
-        child: const _i4.SearchPage(),
+        child: _i4.ProfilePage(),
         transitionsBuilder: _i7.TransitionsBuilders.zoomIn,
         durationInMilliseconds: 300,
         opaque: true,
@@ -126,8 +126,8 @@ class AppRouter extends _i7.RootStackRouter {
               ],
             ),
             _i7.RouteConfig(
-              SearchRoute.name,
-              path: 'search-page',
+              ProfileRoute.name,
+              path: 'profile-page',
               parent: MainRoute.name,
             ),
           ],
@@ -206,15 +206,15 @@ class GuestMainRoute extends _i7.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i4.SearchPage]
-class SearchRoute extends _i7.PageRouteInfo<void> {
-  const SearchRoute()
+/// [_i4.ProfilePage]
+class ProfileRoute extends _i7.PageRouteInfo<void> {
+  const ProfileRoute()
       : super(
-          SearchRoute.name,
-          path: 'search-page',
+          ProfileRoute.name,
+          path: 'profile-page',
         );
 
-  static const String name = 'SearchRoute';
+  static const String name = 'ProfileRoute';
 }
 
 /// generated route for

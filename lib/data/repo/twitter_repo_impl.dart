@@ -53,7 +53,7 @@ class TwitterRepoImpl extends TwitterRepo {
   Future<Either<Failure, List<TweetModel>>> getReplyTweets({String? id}) async {
     try {
       var res = await datasource.getReplyTweets(parentId: id);
-      log("testing res ${res}");
+      log("testing res $res");
       return Right(res);
     } catch (e) {
       return Left(GeneralFailure(err: e.toString()));

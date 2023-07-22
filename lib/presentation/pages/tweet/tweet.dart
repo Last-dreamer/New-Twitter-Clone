@@ -11,7 +11,7 @@ import 'package:twitter_clone/presentation/pages/tweet/widget/tweet_container.da
 import '../common/widgets/snack_bar.dart';
 
 class TweetsPage extends StatefulWidget {
-  TweetsPage({super.key});
+  const TweetsPage({super.key});
 
   @override
   State<TweetsPage> createState() => _TweetsPageState();
@@ -31,6 +31,7 @@ class _TweetsPageState extends State<TweetsPage> {
     var size = MediaQuery.sizeOf(context);
     var width = size.width;
     var height = size.height;
+    var theme = Theme.of(context);
     return Scaffold(
       appBar: const CustomAppBar(),
       body: CustomRefreshIndicator(
@@ -46,8 +47,9 @@ class _TweetsPageState extends State<TweetsPage> {
                   SizedBox(
                       width: double.infinity,
                       height: armOffset * controller.value,
-                      child: Container(
-                          color: Theme.of(context).colorScheme.secondary,
+                      child: ColorFiltered(
+                          colorFilter: ColorFilter.mode(
+                              theme.colorScheme.secondary, BlendMode.srcIn),
                           child: Lottie.asset("assets/icons8 twitter.json",
                               repeat: true))),
                   Transform.translate(

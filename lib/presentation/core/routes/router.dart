@@ -5,7 +5,7 @@ import 'package:twitter_clone/presentation/pages/tweet/tweet.dart';
 
 import '../../pages/auth/login.dart';
 import '../../pages/main_page/main_page.dart';
-import '../../pages/search/search.dart';
+import '../../pages/profle/profile.dart';
 
 @MaterialAutoRouter(replaceInRouteName: "Page,Route", routes: [
   CustomRoute(page: MainPage, children: [
@@ -25,7 +25,7 @@ import '../../pages/search/search.dart';
       //     transitionsBuilder: TransitionsBuilders.fadeIn),
     ]),
     CustomRoute(
-        page: SearchPage,
+        page: ProfilePage,
         durationInMilliseconds: 300,
         transitionsBuilder: TransitionsBuilders.zoomIn),
   ]),

@@ -9,7 +9,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:twitter_clone/presentation/pages/auth/widgets/login_button.dart';
 
 import '../../../data/model/twitter.dart';
-import '../../../di.dart';
 import '../../core/pref/pref.dart';
 
 // ignore: must_be_immutable

@@ -6,6 +6,7 @@ import 'package:twitter_clone/presentation/pages/auth/widgets/cubit/login_cubit_
 import 'package:twitter_clone/presentation/pages/auth/widgets/cubit/register_cubit_cubit.dart';
 import 'package:twitter_clone/presentation/pages/auth/widgets/cubit/should_show_bg_color.dart';
 import 'package:twitter_clone/presentation/pages/auth/widgets/cubit/show_password.dart';
+import 'package:twitter_clone/presentation/pages/profle/widget/cubit/profile_header_cubit_state.dart';
 import 'package:twitter_clone/presentation/pages/reply_tweets/widget/cubit/reply_tweets_cubit.dart';
 import 'package:twitter_clone/presentation/pages/tweet/widget/cubit/tweets_cubit_cubit.dart';
 import 'package:twitter_clone/theme.dart';
@@ -44,7 +45,8 @@ class MyApp extends StatelessWidget {
                   TweetsCubit(useCase: di.di<TwitterUseCase>())),
           BlocProvider<ReplyTweetsCubit>(
               create: (context) =>
-                  ReplyTweetsCubit(useCase: di.di<TwitterUseCase>()))
+                  ReplyTweetsCubit(useCase: di.di<TwitterUseCase>())),
+          BlocProvider(create: (_) => ProfileHeaderCubit()),
         ], child: child!);
       },
       routerDelegate: _appRouter.delegate(),

@@ -1,7 +1,6 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:twitter_clone/data/model/twitter.dart';
