@@ -1,4 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:twitter_clone/presentation/pages/profle/widget/cubit/tab_index.dart';
 
 import '../../common/show_modal_bottom_sheet.dart';
 
@@ -9,12 +13,15 @@ class StickyHeader extends SliverPersistentHeaderDelegate {
 
   @override
   Widget build(context, double shrinkOffset, bool overlapsContent) {
-    var newValue = shrinkOffset - height;
+    var newValue = shrinkOffset - (height - 30);
+
+    var tabHeight = height * .15;
+
     var size = 0.0;
     if (newValue.abs() > 245) {
       size = newValue.abs() - 48;
     } else {
-      size = newValue.abs();
+      size = newValue.abs() - 30;
     }
 
     var theme = Theme.of(context);
@@ -22,22 +29,21 @@ class StickyHeader extends SliverPersistentHeaderDelegate {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
       child: Container(
-        color: Colors.transparent,
-        padding: EdgeInsets.symmetric(horizontal: width / 18),
+        // height: height,
+        // color: Colors.cyan,
         child: Column(
           children: [
             AnimatedContainer(
+              padding: EdgeInsets.symmetric(horizontal: width / 18),
               duration: const Duration(milliseconds: 400),
-              height: size,
+              height: size.abs(),
               child: Opacity(
                 opacity: 1.0,
                 child: Column(
                   children: [
-                    newValue.abs() < 100
-                        ? Container()
-                        : editProfileAndMore(theme),
-                    newValue.abs() < 140 ? Container() : gap(),
-                    newValue.abs() < 160
+                    size.abs() < 100 ? Container() : editProfileAndMore(theme),
+                    size.abs() < 140 ? Container() : gap(),
+                    size.abs() < 160
                         ? Container()
                         : SizedBox(
                             width: width,
@@ -67,8 +73,78 @@ class StickyHeader extends SliverPersistentHeaderDelegate {
               ),
             ),
             Container(
-              color: Colors.green,
-              height: 30,
+              color: theme.colorScheme.primary,
+              height: tabHeight,
+              child: BlocBuilder<TabIndexCubit, int>(
+                builder: (context, state) {
+                  return Row(
+                    // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border(
+                                bottom: BorderSide(
+                                    color: state == 1
+                                        ? theme.colorScheme.secondary
+                                        : Colors.transparent,
+                                    width: 2)),
+                          ),
+                          child: MaterialButton(
+                              minWidth: tabHeight,
+                              height: tabHeight,
+                              padding: EdgeInsets.zero,
+                              onPressed: () {
+                                context.read<TabIndexCubit>().setIndex(1);
+                              },
+                              child: const Text("Tweets")),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border(
+                                bottom: BorderSide(
+                                    color: state == 2
+                                        ? theme.colorScheme.secondary
+                                        : Colors.transparent,
+                                    width: 2)),
+                          ),
+                          child: MaterialButton(
+                              minWidth: tabHeight,
+                              height: tabHeight,
+                              padding: EdgeInsets.zero,
+                              onPressed: () {
+                                context.read<TabIndexCubit>().setIndex(2);
+                              },
+                              child: const Text("Replys")),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border(
+                                bottom: BorderSide(
+                                    color: state == 3
+                                        ? theme.colorScheme.secondary
+                                        : Colors.transparent,
+                                    width: 2)),
+                          ),
+                          child: MaterialButton(
+                              minWidth: tabHeight,
+                              height: tabHeight,
+                              padding: EdgeInsets.zero,
+                              onPressed: () {
+                                context.read<TabIndexCubit>().setIndex(3);
+                              },
+                              child: const Text("Likes")),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
             )
           ],
         ),

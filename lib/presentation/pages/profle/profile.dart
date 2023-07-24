@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:twitter_clone/data/model/twitter.dart';
+import 'package:twitter_clone/presentation/pages/profle/widget/cubit/tab_index.dart';
 import 'package:twitter_clone/presentation/pages/profle/widget/profile_appbar.dart';
 import 'package:twitter_clone/presentation/pages/profle/widget/sticky_header.dart';
+import 'package:twitter_clone/presentation/pages/tweet/widget/tweet_container.dart';
+
+import '../reply_tweets/reply_tweet.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -29,27 +35,88 @@ class _ProfilePageState extends State<ProfilePage>
     var theme = Theme.of(context);
     var size = MediaQuery.sizeOf(context);
     var width = size.width;
-    var height = size.height;
 
-    return CustomScrollView(
-      physics: const BouncingScrollPhysics(),
-      slivers: [
-        profileAppBar(width, image),
-        SliverPersistentHeader(
-          delegate: StickyHeader(height: 250),
-          pinned: true,
-          floating: true,
+    return SafeArea(
+      child: Scaffold(
+        body: CustomScrollView(
+          physics: const BouncingScrollPhysics(),
+          slivers: [
+            profileAppBar(width, image),
+            SliverPersistentHeader(
+              delegate: StickyHeader(height: 320),
+              pinned: true,
+              // floating: true,
+            ),
+            getSliverList(context, theme)
+          ],
         ),
-
-        SliverList(
-            delegate: SliverChildBuilderDelegate((_, index) {
-          return Container(
-            color: Colors.red,
-            height: 10,
-          );
-        }, childCount: 500)),
-        // StickyHeader(height: 200),
-      ],
+      ),
     );
+  }
+
+  Widget getSliverList(BuildContext context, theme) {
+    var state = context.watch<TabIndexCubit>().state;
+
+    if (state == 1) {
+      return SliverList(
+          delegate: SliverChildBuilderDelegate((_, index) {
+        return Container(
+          padding: EdgeInsets.symmetric(vertical: index == 0 ? 0 : 25),
+          child: ReplyContainer(
+            tweet: TweetModel(
+                id: "12",
+                userId: "12",
+                user: User(
+                    id: "11",
+                    email: "email",
+                    username: "dreamer",
+                    createdAt: DateTime.now().toString()),
+                body: "body tweets",
+                createdAt: DateTime.now().toString()),
+            theme: theme,
+          ),
+        );
+      }, childCount: 50));
+    } else if (state == 2) {
+      return SliverList(delegate: SliverChildBuilderDelegate((_, index) {
+        return Container(
+          padding: EdgeInsets.symmetric(vertical: index == 0 ? 0 : 25),
+          child: ReplyContainer(
+            tweet: TweetModel(
+                id: "12",
+                userId: "12",
+                user: User(
+                    id: "11",
+                    email: "email",
+                    username: "dreamer",
+                    createdAt: DateTime.now().toString()),
+                body: "body replys",
+                createdAt: DateTime.now().toString()),
+            theme: theme,
+          ),
+        );
+      }));
+    } else if (state == 3) {
+      return SliverList(delegate: SliverChildBuilderDelegate((_, index) {
+        return Container(
+          padding: EdgeInsets.symmetric(vertical: index == 0 ? 0 : 25),
+          child: ReplyContainer(
+            tweet: TweetModel(
+                id: "12",
+                userId: "12",
+                user: User(
+                    id: "11",
+                    email: "email",
+                    username: "dreamer",
+                    createdAt: DateTime.now().toString()),
+                body: "body likes",
+                createdAt: DateTime.now().toString()),
+            theme: theme,
+          ),
+        );
+      }));
+    } else {
+      return Container();
+    }
   }
 }

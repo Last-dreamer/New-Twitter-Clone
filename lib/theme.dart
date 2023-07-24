@@ -42,7 +42,7 @@ class AppTheme {
 //  *************
 
   static final ThemeData darkTheme = ThemeData(
-      splashColor: Colors.transparent,
+      splashColor: _accentColor,
       scaffoldBackgroundColor: _darkPrimaryColor,
       appBarTheme: const AppBarTheme(
           color: _darkAppColor, iconTheme: IconThemeData(color: _iconColor)),

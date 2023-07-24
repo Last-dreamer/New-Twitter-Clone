@@ -1,5 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -34,8 +36,28 @@ class MainPage extends StatefulWidget {
   State<MainPage> createState() => _MainPageState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _MainPageState extends State<MainPage>
+    with SingleTickerProviderStateMixin {
+  late AnimationController animationController;
+  late Animation<double> animation;
   TabsRouter? tabsRouter;
+
+  @override
+  void initState() {
+    super.initState();
+    animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1500),
+    );
+
+    animation = CurvedAnimation(
+      parent: animationController,
+      curve: Curves.easeInOut,
+    );
+
+    animationController.forward();
+  }
+
   @override
   Widget build(BuildContext context) {
     return AutoTabsRouter(
@@ -54,7 +76,9 @@ class _MainPageState extends State<MainPage> {
                       Theme.of(context),
                       MediaQuery.sizeOf(context).width,
                       MediaQuery.sizeOf(context).height,
-                      "New Tweet");
+                      "New Tweet",
+                      animationController,
+                      animation);
                 },
                 child: SvgPicture.asset(
                   "assets/feather.svg",
