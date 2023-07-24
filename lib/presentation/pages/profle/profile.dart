@@ -35,10 +35,8 @@ class _ProfilePageState extends State<ProfilePage>
       physics: const BouncingScrollPhysics(),
       slivers: [
         profileAppBar(width, image),
-
-        // StickyHeader(height: 200),
         SliverPersistentHeader(
-          delegate: StickyHeader(height: 200),
+          delegate: StickyHeader(height: 250),
           pinned: true,
           floating: true,
         ),

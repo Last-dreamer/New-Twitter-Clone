@@ -10,9 +10,7 @@ class StickyHeader extends SliverPersistentHeaderDelegate {
   @override
   Widget build(context, double shrinkOffset, bool overlapsContent) {
     var newValue = shrinkOffset - height;
-
     var size = 0.0;
-
     if (newValue.abs() > 245) {
       size = newValue.abs() - 48;
     } else {
@@ -70,7 +68,7 @@ class StickyHeader extends SliverPersistentHeaderDelegate {
             ),
             Container(
               color: Colors.green,
-              height: 130,
+              height: 30,
             )
           ],
         ),
