@@ -1,11 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, non_constant_identifier_names
 
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import 'package:twitter_clone/data/model/twitter.dart';
+import 'package:twitter_clone/presentation/pages/add_or_reply_tweet.dart/add_reply_tweet.dart';
 import 'package:twitter_clone/presentation/pages/reply_tweets/widget/cubit/reply_tweets_cubit.dart';
 import 'package:twitter_clone/presentation/pages/tweet/widget/custom_widget.dart';
 
@@ -104,11 +106,23 @@ class _ReplyTweetPageState extends State<ReplyTweetPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          GestureDetector(
-            // onTap: () => showSheet(
-            //     context, theme, width.width, width.height, "Tweet Reply"),
-            child: const Icon(Icons.comment),
+          OpenContainer(
+            useRootNavigator: false,
+            transitionDuration: const Duration(milliseconds: 500),
+            closedColor: theme.colorScheme.primary,
+            closedBuilder: (context, action) {
+              return const Icon(Icons.comment);
+            },
+            openBuilder: (BuildContext context,
+                void Function({Object? returnValue}) action) {
+              return const AddReplyTweetPage(text: "Reply");
+            },
           ),
+          // GestureDetector(
+          //   // onTap: () => showSheet(
+          //   //     context, theme, width.width, width.height, "Tweet Reply", ),
+          //   child: const Icon(Icons.comment),
+          // ),
           const Icon(Icons.loop_rounded),
           Icon(Icons.favorite, color: theme.colorScheme.secondary),
           const Icon(Icons.share_outlined),

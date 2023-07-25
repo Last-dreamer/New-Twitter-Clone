@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:twitter_clone/presentation/pages/add_or_reply_tweet.dart/add_reply_tweet.dart';
 import 'package:twitter_clone/presentation/pages/auth/register.dart';
 import 'package:twitter_clone/presentation/pages/reply_tweets/reply_tweet.dart';
 import 'package:twitter_clone/presentation/pages/tweet/tweet.dart';
@@ -19,11 +20,11 @@ import '../../pages/profle/profile.dart';
           page: ReplyTweetPage,
           durationInMilliseconds: 300,
           transitionsBuilder: TransitionsBuilders.zoomIn),
-      // CustomRoute(
-      //     page: NewTweetPage,
-      //     durationInMilliseconds: 300,
-      //     transitionsBuilder: TransitionsBuilders.fadeIn),
     ]),
+    CustomRoute(
+        page: AddReplyTweetPage,
+        durationInMilliseconds: 100,
+        transitionsBuilder: TransitionsBuilders.noTransition),
     CustomRoute(
         page: ProfilePage,
         durationInMilliseconds: 300,

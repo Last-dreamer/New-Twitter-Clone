@@ -11,25 +11,26 @@
 // ignore_for_file: type=lint
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i7;
-import 'package:flutter/material.dart' as _i8;
+import 'package:auto_route/auto_route.dart' as _i8;
+import 'package:flutter/material.dart' as _i9;
 
-import '../../../data/model/twitter.dart' as _i9;
+import '../../../data/model/twitter.dart' as _i10;
+import '../../pages/add_or_reply_tweet.dart/add_reply_tweet.dart' as _i4;
 import '../../pages/auth/login.dart' as _i2;
 import '../../pages/auth/register.dart' as _i3;
 import '../../pages/main_page/main_page.dart' as _i1;
-import '../../pages/reply_tweets/reply_tweet.dart' as _i6;
-import '../../pages/profle/profile.dart' as _i4;
-import '../../pages/tweet/tweet.dart' as _i5;
+import '../../pages/profle/profile.dart' as _i5;
+import '../../pages/reply_tweets/reply_tweet.dart' as _i7;
+import '../../pages/tweet/tweet.dart' as _i6;
 
-class AppRouter extends _i7.RootStackRouter {
-  AppRouter([_i8.GlobalKey<_i8.NavigatorState>? navigatorKey])
+class AppRouter extends _i8.RootStackRouter {
+  AppRouter([_i9.GlobalKey<_i9.NavigatorState>? navigatorKey])
       : super(navigatorKey);
 
   @override
-  final Map<String, _i7.PageFactory> pagesMap = {
+  final Map<String, _i8.PageFactory> pagesMap = {
     MainRoute.name: (routeData) {
-      return _i7.CustomPage<dynamic>(
+      return _i8.CustomPage<dynamic>(
         routeData: routeData,
         child: const _i1.MainPage(),
         opaque: true,
@@ -37,10 +38,10 @@ class AppRouter extends _i7.RootStackRouter {
       );
     },
     LoginRoute.name: (routeData) {
-      return _i7.CustomPage<dynamic>(
+      return _i8.CustomPage<dynamic>(
         routeData: routeData,
         child: const _i2.LoginPage(),
-        transitionsBuilder: _i7.TransitionsBuilders.slideRight,
+        transitionsBuilder: _i8.TransitionsBuilders.slideRight,
         durationInMilliseconds: 400,
         opaque: true,
         barrierDismissible: false,
@@ -49,38 +50,50 @@ class AppRouter extends _i7.RootStackRouter {
     RegisterRoute.name: (routeData) {
       final args = routeData.argsAs<RegisterRouteArgs>(
           orElse: () => const RegisterRouteArgs());
-      return _i7.CustomPage<dynamic>(
+      return _i8.CustomPage<dynamic>(
         routeData: routeData,
         child: _i3.RegisterPage(key: args.key),
-        transitionsBuilder: _i7.TransitionsBuilders.slideLeft,
+        transitionsBuilder: _i8.TransitionsBuilders.slideLeft,
         durationInMilliseconds: 400,
         opaque: true,
         barrierDismissible: false,
       );
     },
     GuestMainRoute.name: (routeData) {
-      return _i7.MaterialPageX<dynamic>(
+      return _i8.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i1.GuestMainPage(),
       );
     },
-    ProfileRoute.name: (routeData) {
-      return _i7.CustomPage<dynamic>(
+    AddReplyTweetRoute.name: (routeData) {
+      final args = routeData.argsAs<AddReplyTweetRouteArgs>();
+      return _i8.CustomPage<dynamic>(
         routeData: routeData,
-        child: _i4.ProfilePage(),
-        transitionsBuilder: _i7.TransitionsBuilders.zoomIn,
+        child: _i4.AddReplyTweetPage(
+          key: args.key,
+          text: args.text,
+        ),
+        transitionsBuilder: _i8.TransitionsBuilders.noTransition,
+        durationInMilliseconds: 100,
+        opaque: true,
+        barrierDismissible: false,
+      );
+    },
+    ProfileRoute.name: (routeData) {
+      return _i8.CustomPage<dynamic>(
+        routeData: routeData,
+        child: const _i5.ProfilePage(),
+        transitionsBuilder: _i8.TransitionsBuilders.zoomIn,
         durationInMilliseconds: 300,
         opaque: true,
         barrierDismissible: false,
       );
     },
     TweetsRoute.name: (routeData) {
-      final args = routeData.argsAs<TweetsRouteArgs>(
-          orElse: () => const TweetsRouteArgs());
-      return _i7.CustomPage<dynamic>(
+      return _i8.CustomPage<dynamic>(
         routeData: routeData,
-        child: _i5.TweetsPage(key: args.key),
-        transitionsBuilder: _i7.TransitionsBuilders.fadeIn,
+        child: const _i6.TweetsPage(),
+        transitionsBuilder: _i8.TransitionsBuilders.fadeIn,
         durationInMilliseconds: 300,
         opaque: true,
         barrierDismissible: false,
@@ -88,13 +101,13 @@ class AppRouter extends _i7.RootStackRouter {
     },
     ReplyTweetRoute.name: (routeData) {
       final args = routeData.argsAs<ReplyTweetRouteArgs>();
-      return _i7.CustomPage<dynamic>(
+      return _i8.CustomPage<dynamic>(
         routeData: routeData,
-        child: _i6.ReplyTweetPage(
+        child: _i7.ReplyTweetPage(
           key: args.key,
           tweet: args.tweet,
         ),
-        transitionsBuilder: _i7.TransitionsBuilders.zoomIn,
+        transitionsBuilder: _i8.TransitionsBuilders.zoomIn,
         durationInMilliseconds: 300,
         opaque: true,
         barrierDismissible: false,
@@ -103,40 +116,45 @@ class AppRouter extends _i7.RootStackRouter {
   };
 
   @override
-  List<_i7.RouteConfig> get routes => [
-        _i7.RouteConfig(
+  List<_i8.RouteConfig> get routes => [
+        _i8.RouteConfig(
           MainRoute.name,
           path: '/main-page',
           children: [
-            _i7.RouteConfig(
+            _i8.RouteConfig(
               GuestMainRoute.name,
               path: 'guest-main-page',
               parent: MainRoute.name,
               children: [
-                _i7.RouteConfig(
+                _i8.RouteConfig(
                   TweetsRoute.name,
                   path: '',
                   parent: GuestMainRoute.name,
                 ),
-                _i7.RouteConfig(
+                _i8.RouteConfig(
                   ReplyTweetRoute.name,
                   path: 'reply-tweet-page',
                   parent: GuestMainRoute.name,
                 ),
               ],
             ),
-            _i7.RouteConfig(
+            _i8.RouteConfig(
+              AddReplyTweetRoute.name,
+              path: 'add-reply-tweet-page',
+              parent: MainRoute.name,
+            ),
+            _i8.RouteConfig(
               ProfileRoute.name,
               path: 'profile-page',
               parent: MainRoute.name,
             ),
           ],
         ),
-        _i7.RouteConfig(
+        _i8.RouteConfig(
           LoginRoute.name,
           path: '/',
         ),
-        _i7.RouteConfig(
+        _i8.RouteConfig(
           RegisterRoute.name,
           path: '/register-page',
         ),
@@ -145,8 +163,8 @@ class AppRouter extends _i7.RootStackRouter {
 
 /// generated route for
 /// [_i1.MainPage]
-class MainRoute extends _i7.PageRouteInfo<void> {
-  const MainRoute({List<_i7.PageRouteInfo>? children})
+class MainRoute extends _i8.PageRouteInfo<void> {
+  const MainRoute({List<_i8.PageRouteInfo>? children})
       : super(
           MainRoute.name,
           path: '/main-page',
@@ -158,7 +176,7 @@ class MainRoute extends _i7.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i2.LoginPage]
-class LoginRoute extends _i7.PageRouteInfo<void> {
+class LoginRoute extends _i8.PageRouteInfo<void> {
   const LoginRoute()
       : super(
           LoginRoute.name,
@@ -170,8 +188,8 @@ class LoginRoute extends _i7.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i3.RegisterPage]
-class RegisterRoute extends _i7.PageRouteInfo<RegisterRouteArgs> {
-  RegisterRoute({_i8.Key? key})
+class RegisterRoute extends _i8.PageRouteInfo<RegisterRouteArgs> {
+  RegisterRoute({_i9.Key? key})
       : super(
           RegisterRoute.name,
           path: '/register-page',
@@ -184,7 +202,7 @@ class RegisterRoute extends _i7.PageRouteInfo<RegisterRouteArgs> {
 class RegisterRouteArgs {
   const RegisterRouteArgs({this.key});
 
-  final _i8.Key? key;
+  final _i9.Key? key;
 
   @override
   String toString() {
@@ -194,8 +212,8 @@ class RegisterRouteArgs {
 
 /// generated route for
 /// [_i1.GuestMainPage]
-class GuestMainRoute extends _i7.PageRouteInfo<void> {
-  const GuestMainRoute({List<_i7.PageRouteInfo>? children})
+class GuestMainRoute extends _i8.PageRouteInfo<void> {
+  const GuestMainRoute({List<_i8.PageRouteInfo>? children})
       : super(
           GuestMainRoute.name,
           path: 'guest-main-page',
@@ -206,8 +224,42 @@ class GuestMainRoute extends _i7.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i4.ProfilePage]
-class ProfileRoute extends _i7.PageRouteInfo<void> {
+/// [_i4.AddReplyTweetPage]
+class AddReplyTweetRoute extends _i8.PageRouteInfo<AddReplyTweetRouteArgs> {
+  AddReplyTweetRoute({
+    _i9.Key? key,
+    required String text,
+  }) : super(
+          AddReplyTweetRoute.name,
+          path: 'add-reply-tweet-page',
+          args: AddReplyTweetRouteArgs(
+            key: key,
+            text: text,
+          ),
+        );
+
+  static const String name = 'AddReplyTweetRoute';
+}
+
+class AddReplyTweetRouteArgs {
+  const AddReplyTweetRouteArgs({
+    this.key,
+    required this.text,
+  });
+
+  final _i9.Key? key;
+
+  final String text;
+
+  @override
+  String toString() {
+    return 'AddReplyTweetRouteArgs{key: $key, text: $text}';
+  }
+}
+
+/// generated route for
+/// [_i5.ProfilePage]
+class ProfileRoute extends _i8.PageRouteInfo<void> {
   const ProfileRoute()
       : super(
           ProfileRoute.name,
@@ -218,35 +270,23 @@ class ProfileRoute extends _i7.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i5.TweetsPage]
-class TweetsRoute extends _i7.PageRouteInfo<TweetsRouteArgs> {
-  TweetsRoute({_i8.Key? key})
+/// [_i6.TweetsPage]
+class TweetsRoute extends _i8.PageRouteInfo<void> {
+  const TweetsRoute()
       : super(
           TweetsRoute.name,
           path: '',
-          args: TweetsRouteArgs(key: key),
         );
 
   static const String name = 'TweetsRoute';
 }
 
-class TweetsRouteArgs {
-  const TweetsRouteArgs({this.key});
-
-  final _i8.Key? key;
-
-  @override
-  String toString() {
-    return 'TweetsRouteArgs{key: $key}';
-  }
-}
-
 /// generated route for
-/// [_i6.ReplyTweetPage]
-class ReplyTweetRoute extends _i7.PageRouteInfo<ReplyTweetRouteArgs> {
+/// [_i7.ReplyTweetPage]
+class ReplyTweetRoute extends _i8.PageRouteInfo<ReplyTweetRouteArgs> {
   ReplyTweetRoute({
-    _i8.Key? key,
-    required _i9.TweetModel tweet,
+    _i9.Key? key,
+    required _i10.TweetModel tweet,
   }) : super(
           ReplyTweetRoute.name,
           path: 'reply-tweet-page',
@@ -265,9 +305,9 @@ class ReplyTweetRouteArgs {
     required this.tweet,
   });
 
-  final _i8.Key? key;
+  final _i9.Key? key;
 
-  final _i9.TweetModel tweet;
+  final _i10.TweetModel tweet;
 
   @override
   String toString() {

@@ -2,12 +2,14 @@
 
 import 'dart:developer';
 
+import 'package:animations/animations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:twitter_clone/presentation/core/routes/router.gr.dart';
 
+import '../add_or_reply_tweet.dart/add_reply_tweet.dart';
 import '../common/bottom_nav/bottom_nav_bar.dart';
 import '../common/show_modal_bottom_sheet.dart';
 
@@ -69,21 +71,27 @@ class _MainPageState extends State<MainPage>
             resizeToAvoidBottomInset: false,
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.miniCenterDocked,
-            floatingActionButton: FloatingActionButton(
-                onPressed: () {
-                  showSheet(
-                      context,
-                      Theme.of(context),
-                      MediaQuery.sizeOf(context).width,
-                      MediaQuery.sizeOf(context).height,
-                      "New Tweet",
-                      animationController,
-                      animation);
-                },
-                child: SvgPicture.asset(
-                  "assets/feather.svg",
-                  color: Colors.black,
-                )),
+            floatingActionButton: OpenContainer(
+              transitionType: ContainerTransitionType.fadeThrough,
+              transitionDuration: const Duration(milliseconds: 500),
+              useRootNavigator: false,
+              closedColor: Theme.of(context).colorScheme.secondary,
+              closedShape: const CircleBorder(),
+              closedElevation: 8,
+              closedBuilder: (BuildContext context, void Function() action) {
+                return FloatingActionButton(
+                    elevation: 0,
+                    onPressed: null,
+                    child: SvgPicture.asset(
+                      "assets/feather.svg",
+                      color: Colors.black,
+                    ));
+              },
+              openBuilder: (BuildContext context,
+                  void Function({Object? returnValue}) action) {
+                return const AddReplyTweetPage(text: "Add Tweet");
+              },
+            ),
             bottomNavigationBar: LampBottomNavigationBar(
               items: const [Icons.home_outlined, Icons.person_2_outlined],
               width: double.infinity,
