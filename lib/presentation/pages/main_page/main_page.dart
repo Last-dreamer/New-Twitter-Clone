@@ -96,22 +96,12 @@ class _MainPageState extends State<MainPage>
               items: const [Icons.home_outlined, Icons.person_2_outlined],
               width: double.infinity,
               onTap: (index) {
+                log("testing tabs ${tabsRouter?.homeIndex}");
                 tabsRouter!.setActiveIndex(index);
               },
               currentIndex: tabsRouter!.activeIndex,
             ),
-            body: PageTransitionSwitcher(
-                reverse: true,
-                transitionBuilder: (Widget child,
-                    Animation<double> primaryAnimation,
-                    Animation<double> secondaryAnimation) {
-                  return FadeThroughTransition(
-                    animation: primaryAnimation,
-                    secondaryAnimation: secondaryAnimation,
-                    child: child,
-                  );
-                },
-                child: child));
+            body: child);
       },
     );
   }

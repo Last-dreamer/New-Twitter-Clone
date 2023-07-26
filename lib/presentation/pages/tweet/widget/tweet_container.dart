@@ -21,9 +21,15 @@ class TweetContainer extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           const Expanded(
+              child: Hero(
+            tag: "img-",
+            child: Material(
+              color: Colors.transparent,
               child: CircleAvatar(
-            backgroundImage: NetworkImage(
-                "https://images.unsplash.com/photo-1628260412297-a3377e45006f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2874&q=80"),
+                backgroundImage: NetworkImage(
+                    "https://images.unsplash.com/photo-1628260412297-a3377e45006f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2874&q=80"),
+              ),
+            ),
           )),
           Expanded(
               flex: 5,
@@ -152,9 +158,15 @@ class TweetContainer extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          name,
-          style: theme.textTheme.bodyMedium,
+        Hero(
+          tag: "txt-$name",
+          child: Material(
+            color: Colors.transparent,
+            child: Text(
+              name,
+              style: theme.textTheme.bodyMedium,
+            ),
+          ),
         ),
         Row(
           children: [
