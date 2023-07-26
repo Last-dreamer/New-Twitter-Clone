@@ -118,11 +118,6 @@ class _ReplyTweetPageState extends State<ReplyTweetPage> {
               return const AddReplyTweetPage(text: "Reply");
             },
           ),
-          // GestureDetector(
-          //   // onTap: () => showSheet(
-          //   //     context, theme, width.width, width.height, "Tweet Reply", ),
-          //   child: const Icon(Icons.comment),
-          // ),
           const Icon(Icons.loop_rounded),
           Icon(Icons.favorite, color: theme.colorScheme.secondary),
           const Icon(Icons.share_outlined),

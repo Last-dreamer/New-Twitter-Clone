@@ -1,6 +1,8 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:twitter_clone/data/model/twitter.dart';
+import 'package:twitter_clone/presentation/pages/reply_tweets/reply_tweet.dart';
 
 class TweetContainer extends StatelessWidget {
   const TweetContainer({super.key, required this.tweet});
@@ -25,38 +27,54 @@ class TweetContainer extends StatelessWidget {
           )),
           Expanded(
               flex: 5,
-              child: Container(
-                decoration: BoxDecoration(
-                    color: theme.colorScheme.primaryContainer,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                          color: theme.colorScheme.onPrimary.withAlpha(80),
-                          offset: const Offset(1, 2),
-                          blurRadius: 10.0,
-                          spreadRadius: 2.0)
-                    ]),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    firstSection(theme, tweet.user.username, tweet.createdAt),
-                    const SizedBox(
-                      height: 5,
+              child: OpenContainer(
+                transitionType: ContainerTransitionType.fadeThrough,
+                transitionDuration: const Duration(milliseconds: 500),
+                closedColor: theme.colorScheme.primary,
+                openColor: theme.colorScheme.primary,
+                closedElevation: 4,
+                closedShape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                closedBuilder: (context, action) {
+                  return Container(
+                    decoration: BoxDecoration(
+                        color: theme.colorScheme.primaryContainer,
+                        boxShadow: [
+                          BoxShadow(
+                              color: theme.colorScheme.onPrimary.withAlpha(80),
+                              offset: const Offset(1, 2),
+                              blurRadius: 10.0,
+                              spreadRadius: 2.0)
+                        ]),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        firstSection(
+                            theme, tweet.user.username, tweet.createdAt),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        RichText(
+                          text: TextSpan(
+                              text: tweet.body,
+                              style: theme.textTheme.bodyLarge),
+                        ),
+                        Container(
+                          height: 20,
+                        ),
+                        lastSection(width, theme),
+                      ],
                     ),
-                    RichText(
-                      text: TextSpan(
-                          text: tweet.body, style: theme.textTheme.bodyLarge),
-                    ),
-                    Container(
-                      height: 20,
-                    ),
-                    lastSection(width, theme),
-                  ],
-                ),
+                  );
+                },
+                openBuilder: (BuildContext context,
+                    void Function({Object? returnValue}) action) {
+                  return ReplyTweetPage(tweet: tweet);
+                },
               )),
         ],
       ),

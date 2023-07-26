@@ -100,7 +100,18 @@ class _MainPageState extends State<MainPage>
               },
               currentIndex: tabsRouter!.activeIndex,
             ),
-            body: child);
+            body: PageTransitionSwitcher(
+                reverse: true,
+                transitionBuilder: (Widget child,
+                    Animation<double> primaryAnimation,
+                    Animation<double> secondaryAnimation) {
+                  return FadeThroughTransition(
+                    animation: primaryAnimation,
+                    secondaryAnimation: secondaryAnimation,
+                    child: child,
+                  );
+                },
+                child: child));
       },
     );
   }

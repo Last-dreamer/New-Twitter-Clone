@@ -1,9 +1,9 @@
-import 'package:auto_route/auto_route.dart';
+import 'package:animations/animations.dart';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
-import 'package:twitter_clone/presentation/core/routes/router.gr.dart';
+
 import 'package:twitter_clone/presentation/pages/tweet/widget/cubit/tweets_cubit_cubit.dart';
 import 'package:twitter_clone/presentation/pages/tweet/widget/custom_widget.dart';
 import 'package:twitter_clone/presentation/pages/tweet/widget/tweet_container.dart';
@@ -93,12 +93,7 @@ class _TweetsPageState extends State<TweetsPage> {
                     child: ListView.separated(
                       physics: const BouncingScrollPhysics(),
                       itemBuilder: (context, index) {
-                        return GestureDetector(
-                            onTap: () {
-                              context.router.push(
-                                  ReplyTweetRoute(tweet: state.tweets[index]));
-                            },
-                            child: TweetContainer(tweet: state.tweets[index]));
+                        return TweetContainer(tweet: state.tweets[index]);
                       },
                       itemCount: state.tweets.length,
                       separatorBuilder: (BuildContext context, int index) {
