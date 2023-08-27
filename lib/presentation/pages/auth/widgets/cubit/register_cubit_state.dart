@@ -10,13 +10,11 @@ abstract class RegisterCubitState extends Equatable {
 
 class RegisterCubitInitial extends RegisterCubitState {}
 
-
 class RegisterCubitLoading extends RegisterCubitState {}
-
 
 class RegisterCubitSuccess extends RegisterCubitState {
   final AuthResponse response;
- const  RegisterCubitSuccess({
+  const RegisterCubitSuccess({
     required this.response,
   });
 }
@@ -27,4 +25,3 @@ class RegisterCubitError extends RegisterCubitState {
     required this.err,
   });
 }
-

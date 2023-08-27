@@ -4,8 +4,6 @@ import 'package:twitter_clone/data/model/twitter.dart';
 import 'package:twitter_clone/presentation/pages/profle/widget/cubit/tab_index.dart';
 import 'package:twitter_clone/presentation/pages/profle/widget/profile_appbar.dart';
 import 'package:twitter_clone/presentation/pages/profle/widget/sticky_header.dart';
-import 'package:twitter_clone/presentation/pages/tweet/widget/tweet_container.dart';
-
 import '../reply_tweets/reply_tweet.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -45,7 +43,6 @@ class _ProfilePageState extends State<ProfilePage>
             SliverPersistentHeader(
               delegate: StickyHeader(height: 320),
               pinned: true,
-              // floating: true,
             ),
             getSliverList(context, theme)
           ],
