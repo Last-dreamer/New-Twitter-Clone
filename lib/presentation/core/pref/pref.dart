@@ -7,7 +7,6 @@ import 'package:twitter_clone/data/model/twitter.dart';
 
 class Pref {
   Pref();
-
   static Future<bool> saveUser(User user) async {
     final SharedPreferences _preferences =
         await SharedPreferences.getInstance();

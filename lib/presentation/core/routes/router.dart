@@ -8,6 +8,7 @@ import '../../pages/auth/login.dart';
 import '../../pages/main_page/main_page.dart';
 import '../../pages/profle/profile.dart';
 
+//! atesting
 @MaterialAutoRouter(replaceInRouteName: "Page,Route", routes: [
   CustomRoute(page: MainPage, children: [
     AutoRoute(page: GuestMainPage, children: [
@@ -42,19 +43,11 @@ import '../../pages/profle/profile.dart';
 ])
 class $AppRouter {}
 
-
-
-
-
-
-
-
-
 ////
 ///
 ///
 //
-// import 'package:auto_route/auto_route.dart'; 
+// import 'package:auto_route/auto_route.dart';
 // import 'package:twitter_clone/presentation/pages/auth/register.dart';
 // import 'package:twitter_clone/presentation/pages/reply_tweets/reply_tweet.dart';
 // import 'package:twitter_clone/presentation/pages/tweet/tweet.dart';
@@ -66,27 +59,26 @@ class $AppRouter {}
 //   replaceInRouteName: "Page,Route",
 //   routes: [
 
-  
 //      CustomRoute(
 //       page: MainPage,
-//       initial: true,     
+//       initial: true,
 //      children: [
-//        AutoRoute( 
+//        AutoRoute(
 //          page: GuestMainPage,
 //          children: [
 //           CustomRoute(
 //             initial: true,
-//              page: TweetsPage, 
-//         //      durationInMilliseconds: 300, 
+//              page: TweetsPage,
+//         //      durationInMilliseconds: 300,
 //         //  transitionsBuilder: TransitionsBuilders.fadeIn
 //          ),
 //         CustomRoute(page: ReplyTweetPage,
-//           durationInMilliseconds: 300, 
+//           durationInMilliseconds: 300,
 //           transitionsBuilder: TransitionsBuilders.fadeIn
 //          ),
-//          ]      
+//          ]
 //       ),
-      
+
 //     ]
 //      ),
 //     CustomRoute(
@@ -95,11 +87,9 @@ class $AppRouter {}
 //        TransitionsBuilders.slideRight
 //        ),
 
-//     CustomRoute(page: RegisterPage, 
+//     CustomRoute(page: RegisterPage,
 //     durationInMilliseconds: 400, transitionsBuilder: TransitionsBuilders.slideLeft),
 
-   
-      
 //     // MaterialRou
 //   ]
 // )
