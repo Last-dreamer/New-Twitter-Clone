@@ -22,18 +22,20 @@ class TwitterRemoteDatasourcesImpl extends TwitterRemoteDatasources {
 
   @override
   Future<AuthResponse> login({String? email, String? password}) async {
+    log("hitting is working here ... $email :: $password");
     try {
       QueryResult result = await client.mutate(MutationOptions(
           fetchPolicy: FetchPolicy.noCache,
           variables: {"email": "$email", "password": "$password"},
           document: gql(
-            '''  
+            '''
          mutation Mutation(\$email: String!, \$password: String!){
            login(input:  {
               email: \$email,
               password: \$password
            }) {
             accessToken,
+            
             user {
               id,
               email,
@@ -44,6 +46,8 @@ class TwitterRemoteDatasourcesImpl extends TwitterRemoteDatasources {
          }
     ''',
           )));
+
+      log("message testing result: ${result}");
 
       if (result.hasException) {
         log("testing rr ${result.exception} :: ${result.exception?.graphqlErrors.first.message}");
@@ -79,7 +83,7 @@ class TwitterRemoteDatasourcesImpl extends TwitterRemoteDatasources {
             "confirmPassword": "$confirmPassword"
           },
           document: gql(
-            '''  
+            '''
           mutation Mutation(\$username: String!, \$email: String!, \$password: String!, \$confirmPassword: String!){
     register (
         input: {
@@ -121,7 +125,7 @@ class TwitterRemoteDatasourcesImpl extends TwitterRemoteDatasources {
   Future<List<TweetModel>> getTweets() async {
     try {
       QueryResult result = await client.query(
-          QueryOptions(fetchPolicy: FetchPolicy.noCache, document: gql(''' 
+          QueryOptions(fetchPolicy: FetchPolicy.noCache, document: gql('''
         query {
     tweets {
         id,
@@ -160,7 +164,7 @@ class TwitterRemoteDatasourcesImpl extends TwitterRemoteDatasources {
       QueryResult result = await client.query(QueryOptions(
           fetchPolicy: FetchPolicy.noCache,
           variables: {"parentId": "$parentId"},
-          document: gql(''' 
+          document: gql('''
      mutation Mutation(\$parentId: ID!){
     getAllTweetReply(
         parentId: \$parentId){
